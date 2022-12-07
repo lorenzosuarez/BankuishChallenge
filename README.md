@@ -1,5 +1,5 @@
 # Bankuish Technical Challenge
-## _Github repositoriesr_
+## _Github repositories_
 
 ![Android CI](https://github.com/vinaygaba/Learn-Jetpack-Compose-By-Example/workflows/Android%20CI/badge.svg) ![Compose Version](https://img.shields.io/badge/Compose-1.0.1-brightgreen)[![Dagger](https://img.shields.io/badge/Dagger-Hilt-orange)](https://dagger.dev/hilt) ![coroutines](https://img.shields.io/badge/Kotlin-Coroutines-orange)
 
