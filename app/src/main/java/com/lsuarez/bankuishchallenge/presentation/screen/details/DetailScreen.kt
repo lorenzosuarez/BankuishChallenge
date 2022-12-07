@@ -59,11 +59,7 @@ fun DetailScreen(repoItem: Item, navController: NavHostController, context: Cont
                 TopAppBar(
                     navigationIcon = {
                         IconButton(onClick = {
-                            navController.navigate(Screen.Home.route) {
-                                popUpTo(Screen.Home.route) {
-                                    inclusive = true
-                                }
-                            }
+                            navController.navigate(Screen.Home.route)
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
@@ -158,7 +154,7 @@ fun DetailScreen(repoItem: Item, navController: NavHostController, context: Cont
                         Color(0xFFFF1744)
                     )
                     DividerLine()
-                    repoItem.homepage.let { homepage ->
+                    repoItem.homepage?.let { homepage ->
                         if (homepage.isNotEmpty()) {
                             InformationItem(
                                 painterResource = painterResource(R.drawable.ic_link),

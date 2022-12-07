@@ -2,15 +2,19 @@ package com.lsuarez.bankuishchallenge.presentation.screen.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FilterChip
@@ -26,6 +30,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,7 +42,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.lsuarez.bankuishchallenge.R
 import com.lsuarez.bankuishchallenge.presentation.components.ErrorSnackBar
@@ -106,7 +110,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     repoItems = repoItems,
                     navController = navController,
                     listState = listState,
-                    swipeRefreshState = swipeRefreshState,
                     innerPadding = innerPadding,
                     snackbarHostState = snackbarHostState,
                     coroutineScope = coroutineScope
@@ -121,7 +124,6 @@ fun MainContainer(
     repoItems: LazyPagingItems<Item>,
     navController: NavHostController,
     listState: LazyListState,
-    swipeRefreshState: SwipeRefreshState,
     innerPadding: PaddingValues,
     snackbarHostState: SnackbarHostState,
     coroutineScope: CoroutineScope
@@ -134,10 +136,9 @@ fun MainContainer(
         SearchFilterChip(Const.CONSTANT_SEARCH_LANGUAGE)
 
         ItemListContent(
-            allItems = repoItems,
+            repoItems = repoItems,
             navController = navController,
             listState,
-            swipeRefreshState,
             snackbarHostState,
             coroutineScope
         )
@@ -160,37 +161,43 @@ fun SearchFilterChip(language: String) {
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun ItemListContent(
-    allItems: LazyPagingItems<Item>,
+    repoItems: LazyPagingItems<Item>,
     navController: NavHostController,
     listState: LazyListState,
-    swipeRefreshState: SwipeRefreshState,
     snackbarHostState: SnackbarHostState,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
 ) {
     val decimalFormat = remember { DecimalFormat("#,###") }
 
-    when (val result = allItems.loadState.refresh) {
-        is LoadState.Loading -> swipeRefreshState.isRefreshing = true
-        is LoadState.Error -> {
-            swipeRefreshState.isRefreshing = false
-            result.error.message?.let { msg ->
-                ErrorSnackBar(
-                    msg,
-                    coroutineScope,
-                    snackbarHostState,
-                    onRetry = { allItems.refresh() }
-                )
+    LazyColumn(
+        state = listState,
+        modifier = Modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        when (val result = repoItems.loadState.refresh) {
+            is LoadState.Error -> {
+                item {
+                    result.error.message?.let { message ->
+                        ErrorSnackBar(
+                            message,
+                            coroutineScope,
+                            snackbarHostState
+                        )
+                        Box(modifier = Modifier.fillParentMaxSize()) {
+                            Button(
+                                modifier = Modifier.align(Alignment.Center),
+                                onClick = { repoItems.refresh() }
+                            ) {
+                                Text(text = stringResource(R.string.retry))
+                            }
+                        }
+                    }
+                }
             }
-        }
-        is LoadState.NotLoading -> {
-            swipeRefreshState.isRefreshing = false
-            LazyColumn(
-                state = listState,
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
+
+            is LoadState.NotLoading -> {
                 items(
-                    items = allItems,
+                    items = repoItems,
                     key = { it.id }
                 ) { item ->
                     item?.let { item }?.let {
@@ -211,8 +218,31 @@ fun ItemListContent(
                         )
                     }
                 }
+                if (repoItems.loadState.append is LoadState.Loading) {
+                    item {
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .padding(16.dp)
+                            )
+                        }
+                    }
+                }
             }
+
+            is LoadState.Loading -> {
+                item {
+                    Box(modifier = Modifier.fillParentMaxSize()) {
+                        Text(
+                            text = stringResource(R.string.please_wait),
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+
+            else -> Unit
         }
-        else -> Unit
     }
 }

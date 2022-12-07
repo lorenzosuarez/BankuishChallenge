@@ -27,7 +27,7 @@ fun NavGraph(navController: NavHostController, context: Context) {
     ) {
         composable(
             route = Screen.Home.route,
-            popEnterTransition = { slideInHorizontally(animationSpec = tween(500)) },
+            enterTransition = { slideInHorizontally(animationSpec = tween(500)) },
             exitTransition = { slideOutHorizontally(animationSpec = tween(500)) }
         ) {
             HomeScreen(navController)

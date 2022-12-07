@@ -77,7 +77,7 @@ data class Item(
     @SerializedName("has_wiki")
     val hasWiki: Boolean = false,
     @SerializedName("homepage")
-    val homepage: String = "",
+    val homepage: String? = "",
     @SerializedName("hooks_url")
     val hooksUrl: String = "",
     @SerializedName("html_url")
