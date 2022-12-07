@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BankuishChallenge</string>
+    <string name="search_content_description">search_content_description</string>
+    <string name="search_from_repos">Search by name</string>
+    <string name="retry">Retry</string>
+    <string name="error">Connection error</string>
+</resources>
