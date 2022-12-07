@@ -1,10 +1,9 @@
 # Bankuish Technical Challenge
 ## _Github repositoriesr_
 
-![Android CI](https://github.com/vinaygaba/Learn-Jetpack-Compose-By-Example/workflows/Android%20CI/badge.svg) ![Compose Version](https://img.shields.io/badge/Compose-1.0.1-brightgreen) 
+![Android CI](https://github.com/vinaygaba/Learn-Jetpack-Compose-By-Example/workflows/Android%20CI/badge.svg) ![Compose Version](https://img.shields.io/badge/Compose-1.0.1-brightgreen)[![Dagger](https://img.shields.io/badge/Dagger-Hilt-orange)](https://dagger.dev/hilt) ![coroutines](https://img.shields.io/badge/Kotlin-Coroutines-orange)
 
-
-### Tech specs
+### 🔧 Tech specs 
 #### Desirable Implementations:
 ● Retrofit for Api call
 ● Gson for Parsing Response
@@ -17,7 +16,22 @@ Optional Implementations (plus):
 ● Pagination
 ● Swipe to Refresh
 
-# Screenshots
+### ✨ API
+- api.github.com/search/repositories (GET)
+
+### 📃 Libraries used
+- [Coroutines](https://developer.android.com/kotlin/coroutines) - A concurrency design pattern library
+- [Flow](https://developer.android.com/kotlin/flow) - Built on top of coroutines and is stream of data that can be computed asynchronously
+- [Hilt](https://dagger.dev/hilt/) - Dependency Injection framework
+- [Transition](https://google.github.io/accompanist/navigation-animation/) - Transition
+- [Paging V3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) - Pagination
+- [OkHttp3](https://github.com/square/okhttp) - Network interceptor
+- [Retrofit](https://github.com/square/retrofit) - HTTP client
+- [Coil](https://coil-kt.github.io/coil) - Loading images
+- [Gson](https://github.com/google/gson) - JSON library
+- [Material3](https://m3.material.io)
+
+### 📺 Result 
 | Main Screen Dark | Detail Screen Dark |
 |:-:|:-:|
 | ![1](https://user-images.githubusercontent.com/55887438/206164724-6c26375b-7938-4e4a-9033-04102071f5cc.png?raw=true) | ![2](https://user-images.githubusercontent.com/55887438/206164801-e4a73958-48b9-4c0c-b7d5-4de5ec72ec33.png?raw=true) |
