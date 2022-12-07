@@ -3,6 +3,20 @@
 
 ![Android CI](https://github.com/vinaygaba/Learn-Jetpack-Compose-By-Example/workflows/Android%20CI/badge.svg) ![Compose Version](https://img.shields.io/badge/Compose-1.0.1-brightgreen) 
 
+
+### Tech specs
+#### Desirable Implementations:
+● Retrofit for Api call
+● Gson for Parsing Response
+● MVVM Architecture
+● Navigation and NavArgs for the fragments
+● Dependency Injection with Koin or Dagger
+● Unit/Instrumented Tests
+Optional Implementations (plus):
+● Loading/Error State
+● Pagination
+● Swipe to Refresh
+
 # Screenshots
 | Main Screen Dark | Detail Screen Dark |
 |:-:|:-:|
