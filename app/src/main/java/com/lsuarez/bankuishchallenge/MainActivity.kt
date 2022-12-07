@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BankuishChallengeTheme {
                 val navController = rememberAnimatedNavController()
-                NavGraph(navController = navController)
+                NavGraph(navController = navController, applicationContext)
             }
         }
     }

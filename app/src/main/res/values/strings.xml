@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">BankuishChallenge</string>
+    <string name="toolbar_title">Github repositories</string>
     <string name="search_content_description">search_content_description</string>
     <string name="search_from_repos">Search by name</string>
     <string name="retry">Retry</string>
     <string name="error">Connection error</string>
+    <string name="description">Description</string>
+    <string name="see_on_github">See on github</string>
 </resources>

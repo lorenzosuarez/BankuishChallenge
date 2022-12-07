@@ -58,7 +58,7 @@ import java.text.DecimalFormat
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
-    val allItems = viewModel.getAllItems.collectAsLazyPagingItems()
+    val repoItems = viewModel.getAllItems.collectAsLazyPagingItems()
     val isLoading by viewModel.isLoading.collectAsState()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
     val listState = rememberLazyListState()
@@ -72,7 +72,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
 
     SwipeRefresh(
         state = swipeRefreshState,
-        onRefresh = { allItems.refresh() }
+        onRefresh = { repoItems.refresh() }
     ) {
         Scaffold(
             snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -82,7 +82,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     title = {
                         Text(
                             modifier = Modifier.padding(horizontal = 5.dp),
-                            text = stringResource(R.string.app_name)
+                            text = stringResource(R.string.toolbar_title)
                         )
                     },
                     navigationIcon = {
@@ -103,7 +103,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             floatingActionButtonPosition = FabPosition.End,
             content = { innerPadding ->
                 MainContainer(
-                    allItems = allItems,
+                    repoItems = repoItems,
                     navController = navController,
                     listState = listState,
                     swipeRefreshState = swipeRefreshState,
@@ -118,7 +118,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
 
 @Composable
 fun MainContainer(
-    allItems: LazyPagingItems<Item>,
+    repoItems: LazyPagingItems<Item>,
     navController: NavHostController,
     listState: LazyListState,
     swipeRefreshState: SwipeRefreshState,
@@ -131,10 +131,10 @@ fun MainContainer(
             .fillMaxSize()
             .padding(innerPadding)
     ) {
-        SearchFilterChip("kotlin")
+        SearchFilterChip(Const.CONSTANT_SEARCH_LANGUAGE)
 
         ItemListContent(
-            allItems = allItems,
+            allItems = repoItems,
             navController = navController,
             listState,
             swipeRefreshState,
@@ -151,7 +151,7 @@ fun SearchFilterChip(language: String) {
         modifier = Modifier.padding(horizontal = 15.dp),
         selected = false,
         enabled = false,
-        onClick = { /*TODO*/ },
+        onClick = { /*NOTHING*/ },
         leadingIcon = { Icon(Icons.Filled.Check, contentDescription = null) },
         label = { Text(text = language) }
     )
@@ -195,7 +195,7 @@ fun ItemListContent(
                 ) { item ->
                     item?.let { item }?.let {
                         GithubRepoItemRow(
-                            item = it,
+                            repoItem = it,
                             decimalFormat = decimalFormat,
                             onSelectedRepoItem = { item ->
                                 navController.currentBackStackEntry?.savedStateHandle?.set(
@@ -213,5 +213,6 @@ fun ItemListContent(
                 }
             }
         }
+        else -> Unit
     }
 }

@@ -28,7 +28,7 @@ fun ProfileImage(
             .data(data)
             .crossfade(true)
             .build(),
-        placeholder = painterResource(R.drawable.ic_launcher_background),
+        placeholder = painterResource(R.drawable.ic_placeholder),
         contentDescription = "Avatar",
         contentScale = ContentScale.FillBounds,
         modifier = Modifier

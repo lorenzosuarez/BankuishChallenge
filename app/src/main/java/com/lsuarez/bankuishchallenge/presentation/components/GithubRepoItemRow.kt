@@ -32,7 +32,7 @@ import java.text.DecimalFormat
 
 @Composable
 fun GithubRepoItemRow(
-    item: Item,
+    repoItem: Item,
     decimalFormat: DecimalFormat,
     onSelectedRepoItem: (repoItem: Item) -> Unit
 ) {
@@ -43,7 +43,7 @@ fun GithubRepoItemRow(
                 vertical = 4.dp
             )
             .clickable {
-                onSelectedRepoItem(item)
+                onSelectedRepoItem(repoItem)
             },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -56,7 +56,7 @@ fun GithubRepoItemRow(
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 ProfileImage(
-                    item.owner.avatarUrl,
+                    repoItem.owner.avatarUrl,
                 )
                 Column(
                     modifier = Modifier
@@ -65,11 +65,11 @@ fun GithubRepoItemRow(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "@${item.owner.login}",
-                        style = MaterialTheme.typography.labelMedium
+                        text = "@${repoItem.owner.login}",
+                        style = MaterialTheme.typography.labelLarge
                     )
                     Text(
-                        text = item.createdAt,
+                        text = "[${repoItem.owner.type.uppercase()}]",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.outline
                     )
@@ -90,7 +90,7 @@ fun GithubRepoItemRow(
                     )
 
                     Text(
-                        text = decimalFormat.format(item.stargazersCount),
+                        text = decimalFormat.format(repoItem.stargazersCount),
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
@@ -103,13 +103,13 @@ fun GithubRepoItemRow(
             )
 
             Text(
-                text = item.fullName,
+                text = repoItem.fullName,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(top = 10.dp, bottom = 8.dp),
             )
             Text(
-                text = item.description ?: "",
+                text = repoItem.description ?: "",
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 2,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

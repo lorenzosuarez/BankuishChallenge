@@ -1,5 +1,6 @@
 package com.lsuarez.bankuishchallenge.presentation.navigation
 
+import android.content.Context
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
@@ -19,7 +20,7 @@ import com.lsuarez.domain.model.Item
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, context: Context) {
     AnimatedNavHost(
         navController = navController,
         startDestination = Screen.Home.route
@@ -55,7 +56,8 @@ fun NavGraph(navController: NavHostController) {
             if (repoItem != null) {
                 DetailScreen(
                     repoItem = repoItem,
-                    navController = navController
+                    navController = navController,
+                    context
                 )
             }
         }
